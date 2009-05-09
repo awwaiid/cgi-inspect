@@ -11,26 +11,33 @@ CGI::Inspect - Inspect and debug CGI apps with an in-browser UI
 
   print "Content-type: text/html\n\n";
   for my $i (1..10) {
-    print "$i cookies...<br>";
+    print "$i cookies for me to eat...<br>";
     inspect() if $i == 5;
   }
 
 =head1 DESCRIPTION
 
-This class is a drop-in web based inspector for plain CGI (or other CGI-based)
+This class is a drop-in web based inspector for plain CGI (or CGI-based)
 applications. Include the library, and then call inspect(). In your server
 error logs you'll see something like "Please connect to localhost:8080". When
 you do, you'll be greeted with an inspection UI which includes a stack trace,
 REPL, and other goodies.
+
+=head1 REQUIREMENTS
+
+To work it's magic this modules needs Continuity, Padwalker, and Data::Alias.
+Some plugins have additional dependencies which are not pulled in when
+installing from CPAN.
 
 =cut
 
 use strict;
 use Continuity;
 use Continuity::RequestCallbacks;
-use Sub::Exporter -setup => {
-  exports => [ qw(inspect ) ]
-};
+use base 'Exporter';
+our @EXPORT = qw( inspect );
+
+our $VERSION = '0.2';
 
 =head1 EXPORTED SUBS
 
@@ -127,7 +134,7 @@ sub display {
   $self->request->print(qq|
     <html>
       <head>
-        <title>Continuity::Monitor</title>
+        <title>CGI::Inspect</title>
         <link rel="stylesheet" type="text/css" href="htdocs/mon.css">
         <link rel="stylesheet" href="js/themes/flora/flora.dialog.css" type="text/css" media="screen">
         <link rel="stylesheet" href="js/jquery-treeview/jquery.treeview.css" />
