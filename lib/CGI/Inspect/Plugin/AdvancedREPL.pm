@@ -1,4 +1,4 @@
-package Continuity::Monitor::Plugin::REPL;
+package CGI::Inspect::Plugin::REPL;
 
 our $VERSION = '0.01';
 

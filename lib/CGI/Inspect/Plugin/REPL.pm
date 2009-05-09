@@ -1,11 +1,9 @@
-package Continuity::Monitor::Plugin::REPL;
+package CGI::Inspect::Plugin::REPL;
 
 use strict;
-use base 'Continuity::Monitor::Plugin';
+use base 'CGI::Inspect::Plugin';
 use PadWalker qw(peek_my);
 use Data::Alias;
-
-our $VERSION = '0.01';
 
 sub process {
   my $self = shift;
@@ -16,7 +14,7 @@ sub process {
   my $level = 0;
   while(1) {
     my ($package, $filename, $line) = caller($level);
-    last if $package !~ /^(Continuity|Coro)/;
+    last if $package !~ /^(Continuity|Coro|CGI::Inspect)/;
     $level++;
   }
 

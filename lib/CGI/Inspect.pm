@@ -1,13 +1,13 @@
-package Continuity::Monitor::CGI;
+package CGI::Inspect;
 
 =head1 NAME
 
-Continuity::Monitor::CGI - Inspect and debug CGI apps with an in-browser UI
+CGI::Inspect - Inspect and debug CGI apps with an in-browser UI
 
 =head1 SYNOPSIS
 
   use CGI;
-  use Continuity::Monitor::CGI;
+  use CGI::Inspect;
 
   print "Content-type: text/html\n\n";
   for my $i (1..10) {
@@ -46,7 +46,7 @@ sub inspect {
   require IO::Handle;
   STDERR->autoflush(1);
   STDOUT->autoflush(1);
-  my $self = Continuity::Monitor::CGI->new(@_);
+  my $self = CGI::Inspect->new(@_);
   $self->start_inspecting;
 }
 
@@ -54,7 +54,7 @@ sub inspect {
 
 These methods are all internal. All you have to do is call inspect().
 
-=head2 Continuity::Monitor::CGI->new()
+=head2 CGI::Inspect->new()
 
 Create a new monitor object.
 
@@ -90,7 +90,7 @@ sub start_inspecting {
   
   # use Devel::StackTrace::WithLexicals;
   # my $trace = Devel::StackTrace::WithLexicals->new(
-    # ignore_package => [qw( Devel::StackTrace Continuity::Monitor::CGI )]
+    # ignore_package => [qw( Devel::StackTrace CGI::Inspect )]
   # );
   # $self->trace( $trace );
 
@@ -102,8 +102,8 @@ Initialize the Continuity server, and begin the run loop.
 
 sub start_server {
   my ($self) = @_;
-  my $docroot = $INC{'Continuity/Monitor/CGI.pm'};
-  $docroot =~ s/CGI.pm/htdocs/;
+  my $docroot = $INC{'CGI/Inspect.pm'};
+  $docroot =~ s/Inspect.pm/htdocs/;
   my $server = Continuity->new(
     port => $self->{port},
     docroot => $docroot,
@@ -165,7 +165,7 @@ Load all of our plugins.
 
 sub load_plugins {
   my ($self) = @_;
-  my $base = "Continuity::Monitor::Plugin::";
+  my $base = "CGI::Inspect::Plugin::";
   foreach my $plugin (@{ $self->{plugins} }) {
     my $plugin_pkg = $base . $plugin;
     eval "use $plugin_pkg";

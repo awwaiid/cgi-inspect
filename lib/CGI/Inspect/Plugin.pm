@@ -1,4 +1,4 @@
-package Continuity::Monitor::Plugin;
+package CGI::Inspect::Plugin;
 
 use strict;
 

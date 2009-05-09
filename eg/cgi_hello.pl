@@ -2,7 +2,7 @@
 
 use strict;
 use lib '../lib';
-use Continuity::Monitor::CGI qw( inspect );
+use CGI::Inspect qw( inspect );
 print "Content-type: text/html\n\n";
 
 my $x = 5;

@@ -1,7 +1,7 @@
-package Continuity::Monitor::Plugin::Exit;
+package CGI::Inspect::Plugin::Exit;
 
 use strict;
-use base 'Continuity::Monitor::Plugin';
+use base 'CGI::Inspect::Plugin';
 
 sub process {
   my ($self) = @_;

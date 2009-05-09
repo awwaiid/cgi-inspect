@@ -1,4 +1,4 @@
-package Continuity::Monitor::Plugin::Counter;
+package CGI::Inspect::Plugin::Counter;
 
 use Moose;
 use Method::Signatures;

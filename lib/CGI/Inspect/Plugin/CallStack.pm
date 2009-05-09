@@ -1,4 +1,4 @@
-package Continuity::Monitor::Plugin::CallStack;
+package CGI::Inspect::Plugin::CallStack;
 
 use Moose;
 use Method::Signatures;
@@ -17,7 +17,7 @@ method print_trace {
   $self->print("<div class=dialog id=stacktrace title='Stacktrace'><ul>");
   # my @frames = $self->trace->frames;
   my $trace = Devel::StackTrace::WithLexicals->new(
-    ignore_package => [qw( Devel::StackTrace Continuity::Monitor::CGI )]
+    ignore_package => [qw( Devel::StackTrace CGI::Inspect )]
   );  
   my @frames = $trace->frames;
   my $fieldnum = 0;
@@ -34,7 +34,7 @@ method print_trace {
 method print_lexicals {
 
   my $lexicals = Devel::StackTrace::WithLexicals->new(
-    ignore_package => [qw( Devel::StackTrace Continuity::Monitor::CGI )]
+    ignore_package => [qw( Devel::StackTrace CGI::Inspect )]
   );
 
   my $fieldnum = 0;

@@ -1,4 +1,4 @@
-package Continuity::Monitor::Plugin::FileEdit;
+package CGI::Inspect::Plugin::FileEdit;
 
 use Moose;
 use Method::Signatures;
