@@ -76,7 +76,7 @@ sub new {
   my $self = {
     port => 8080,
     plugins => [qw(
-      BasicLook Exit REPL
+      BasicLook Exit REPL CallStack
     )],
     # REPL CallStack Exit Counter FileEdit
     plugin_objects => [],

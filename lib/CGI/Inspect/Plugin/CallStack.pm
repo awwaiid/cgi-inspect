@@ -1,94 +1,75 @@
 package CGI::Inspect::Plugin::CallStack;
 
-use Moose;
-use Method::Signatures;
+use strict;
+use base 'CGI::Inspect::Plugin';
 use Devel::StackTrace::WithLexicals;
-use Data::Visitor::Callback;
+use Data::Dumper;
 
-# has trace => ( is => 'rw' );
+sub new {
+  my $class = shift;
+  my $self = $class->SUPER::new(@_);
+  $self->{trace} = Devel::StackTrace::WithLexicals->new;
+  return $self;
+}
 
-with qw(
-  MooseX::Coro
-  MooseX::Continuity::Request
-  MooseX::Continuity::CallbackLinks
-);
+sub print_trace {
+  my $self = shift;
+  my $output = "<div class=dialog id=stacktrace title='Stacktrace'><ul>";
+  my $trace = $self->{trace};
+  $trace->reset_pointer;
+  my $frame_index = 0;
+  my $frame;
+  while($frame = $trace->next_frame) {
+    last if $frame->package() !~ /^(Continuity|Coro|CGI::Inspect)/;
+    $frame_index++;
+  }
+  my $next_frame = $frame;
+  while($next_frame = $trace->next_frame) {
+    $output .= "<li>" . $next_frame->subroutine
+      . " (" . $next_frame->filename . ":" . $next_frame->line . ")"
+    ;
+    $output .= $self->print_lexicals($frame->lexicals, $frame_index);
+    $output .= "</li>";
+    $frame = $next_frame;
+    $frame_index++;
+  }
+  $output .= "</ul></div>";
+  return $output;
+}
 
-method print_trace {
-  $self->print("<div class=dialog id=stacktrace title='Stacktrace'><ul>");
-  # my @frames = $self->trace->frames;
-  my $trace = Devel::StackTrace::WithLexicals->new(
-    ignore_package => [qw( Devel::StackTrace CGI::Inspect )]
-  );  
-  my @frames = $trace->frames;
-  my $fieldnum = 0;
-  foreach my $level (@frames) {
-    $self->print("<li>" . $level->subroutine
-      . " (" . $level->filename . ":" . $level->line . ")"
+sub print_lexicals {
+  my ($self, $lexicals, $frame_index) = @_;
+  my $output = '<ul>';
+  local $Data::Dumper::Terse = 1;
+
+  foreach my $var (sort keys %$lexicals) {
+    my $val = Dumper(${ $lexicals->{$var} });
+    my $out;
+    my $save_button = $self->request->callback_submit(
+      Save => sub {
+        my $val = $self->param('blah');
+        $out = qq{got: $val};
+        print STDERR "val: $val\n";
+      }
     );
-    $self->print_lexicals($level->lexicals);
-    $self->print("</li>");
+    my $edit_link = $self->request->callback_link(
+      Edit => sub {
+        $out = qq{<input type=text name=blah value="$val">$save_button};
+      }
+    );
+    #$out ||= "<li><pre>$var = $val</pre>$edit_link</li>";
+    $out ||= "<li><pre>$var = $val</pre></li>";
+    $output .= "<li>$out</li>";
   }
-  $self->print("</ul></div>");
-}
 
-method print_lexicals {
-
-  my $lexicals = Devel::StackTrace::WithLexicals->new(
-    ignore_package => [qw( Devel::StackTrace CGI::Inspect )]
-  );
-
-  my $fieldnum = 0;
-  my $visitor = Data::Visitor::Callback->new(
-    ignore_return_values => 1,
-
-    scalar => sub {
-      my ($v, $d) = @_;
-      if(ref $d eq 'SCALAR') {
-        my $fieldname = $self->field_name($fieldnum++);
-        $self->print(qq|<input type=text name="$fieldname" value="|
-          . $$d
-          . qq|">|);
-        $self->print($self->cb_button( Set => sub {
-          $$d = $self->param($fieldname);
-        }));
-      } else {
-        $self->print(ref $$d);
-      }
-    },
-
-    hash => sub {
-      my ($v, $d) = @_;
-      $self->print("<ul>");
-      foreach my $name (keys %$d) {
-        $self->print("<li>$name: ");
-        if(ref $d->{$name}) {
-          $v->visit($d->{$name});
-        } else {
-          my $fieldname = $self->field_name($fieldnum++);
-          $self->print(qq|<input type=text name="$fieldname" value="|
-            . $d->{$name}
-            . qq|">|);
-          $self->print($self->cb_button( Set => sub {
-            $d->{$name} = $self->param($fieldname);
-          }));
-        }
-        $self->print("</li>\n");
-      }
-      $self->print("</ul>");
-    }
-  );
-  $visitor->visit($lexicals);
-  # use Data::Dumper;
-  # print STDERR Dumper($lexicals);
+  $output .= "</ul>";
+  return $output;
 }
 
 
-method main {
-  while(1) {
-    $self->print_trace;
-    $self->yield(1);
-    $self->process_callbacks;
-  }
+sub process {
+  my ($self) = @_;
+  return $self->print_trace;
 }
 
 1;
