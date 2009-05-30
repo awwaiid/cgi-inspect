@@ -1,0 +1,22 @@
+
+== General ==
+
+* Config (parameters when use-d)
+** List of plugins
+** Specify port (or random)
+
+== Plugins ==
+
+* StackTrace
+** Inline editing
+** Don't collapse each reload (maybe AJAXify)
+
+* DBI
+** Trace
+** Statistics
+
+* NYTProf
+** Just process and provide the same output
+** Need to specify temp directory
+
+
