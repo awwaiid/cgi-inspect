@@ -1,5 +1,11 @@
-Revision history for Continuity::Monitor. See Changes-darcs or the main
-repository for a detailed list of internal changes.
+Revision history for CGI::Inspect. See Changes-darcs or the main repository for
+a detailed list of internal changes.
+
+Version 0.02 (released 2009.05.30)
+  * Renamed to CGI::Inspect
+  * Significantly refactored to be lighter
+  * Only simple REPL and simple StackTrace turned on
+  * Added DIE handler to auto-start
 
 Version 0.01 (released 2008.10.14)
   * Initial release, just to get it out there

@@ -3,6 +3,7 @@ Changes-darcs
 MANIFEST
 Makefile.PL
 README
+TODO
 eg/cgi_hello.pl
 eg/counter.pl
 lib/CGI/Inspect.pm
@@ -43,7 +44,6 @@ lib/CGI/Inspect/htdocs/images/tv-expandable.gif
 lib/CGI/Inspect/htdocs/images/tv-item-last.gif
 lib/CGI/Inspect/htdocs/images/tv-item.gif
 lib/CGI/Inspect/htdocs/images/vgrabber.gif
-lib/CGI/Inspect/htdocs/js/jquery-1.2.6.js
 lib/CGI/Inspect/htdocs/js/jquery-treeview/images/file.gif
 lib/CGI/Inspect/htdocs/js/jquery-treeview/images/folder-closed.gif
 lib/CGI/Inspect/htdocs/js/jquery-treeview/images/folder.gif
@@ -63,6 +63,7 @@ lib/CGI/Inspect/htdocs/js/jquery-treeview/jquery.treeview.async.js
 lib/CGI/Inspect/htdocs/js/jquery-treeview/jquery.treeview.css
 lib/CGI/Inspect/htdocs/js/jquery-treeview/jquery.treeview.js
 lib/CGI/Inspect/htdocs/js/jquery.cookie.js
+lib/CGI/Inspect/htdocs/js/jquery.js
 lib/CGI/Inspect/htdocs/js/jquery.ui.all.js
 lib/CGI/Inspect/htdocs/js/themes/default/images/222222_11x11_icon_arrows_leftright.gif
 lib/CGI/Inspect/htdocs/js/themes/default/images/222222_11x11_icon_arrows_updown.gif
@@ -177,8 +178,4 @@ lib/CGI/Inspect/htdocs/js/version.txt
 lib/CGI/Inspect/htdocs/mon.css
 lib/CGI/Inspect/htdocs/mon.js
 lib/Devel/REPL/Plugin/DebugHelp.pm
-lib/MooseX/Continuity/CallbackLinks.pm
-lib/MooseX/Continuity/Request.pm
-lib/MooseX/Continuity/Widget.pm
-lib/MooseX/Coro.pm
-t/Continuity-Monitor-CGI.t
+t/CGI-Inspect.t

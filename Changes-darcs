@@ -20,7 +20,18 @@ print $out $f;
 # *** This is the actual Changelog :) ***
 # ***************************************
 __DATA__
+Sat May 30 2009  awwaiid@thelackthereof.org
+  tagged 0.2
+  * Update CallStack plugin and include it by default
+
+Fri May 29 2009  awwaiid@thelackthereof.org
+  * Preliminary window open/close and inspect-on-die
+  * Change background color
+  * Update REPL
+  * Update stuff
+
 Sat May  9 2009  awwaiid@thelackthereof.org
+  * More renames and further trimming
   * Rename Continuity::Monitor::CGI to CGI::Inspect
   * shuffle files
   * Add new simple REPL (thanks scott!)
