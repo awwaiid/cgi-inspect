@@ -20,7 +20,41 @@ print $out $f;
 # *** This is the actual Changelog :) ***
 # ***************************************
 __DATA__
+Sat May  9 2009  awwaiid@thelackthereof.org
+  * Rename Continuity::Monitor::CGI to CGI::Inspect
+  * shuffle files
+  * Add new simple REPL (thanks scott!)
+  * Massive refactor -- cleanup and trim
+
+Sat Jan  3 2009  scott@slowass.net
+  * new inspect API
+
+Thu Jan  1 2009  awwaiid@thelackthereof.org
+  * Fix closing ul in session list
+  * Fix docroot of C::Monitor
+  * Remove Continuity::Monitor::REPL reference
+  * Add explicit server to counter example monitor
+
+Wed Dec 31 2008  scott@slowass.net
+  * Continuity::Monitor wit [_^H_][_^H_][_^H_]orking with the C::MM[_^H_]::CGI plugins
+
+Mon Dec 29 2008  scott@slowass.net
+  * cleanups and fixes for my fixes n [_^H_][_^H_]in Monitor.pm
+  * bug fix - losing track of the server it started s[_^H_][_^H_], failing to find sessions
+
+Wed Oct 15 2008  awwaiid@thelackthereof.org
+  tagged 0.01
+  * add Module::Refresh as a dependency
+
 Tue Oct 14 2008  awwaiid@thelackthereof.org
+  * update manifest
+  * Move docroot and add Coro::Generator dependency
+  * Move test
+  * update manifest
+  * Add darcs-changes
+  * Remove padwalker usage and add note about Continuity::Monitor not working
+  * Kill some old files
+  * Update build config stuff
   * Update changelog
   * add js deps
   * add js deps
