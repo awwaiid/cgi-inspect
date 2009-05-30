@@ -4,7 +4,7 @@ a detailed list of internal changes.
 Version 0.02 (released 2009.05.30)
   * Renamed to CGI::Inspect
   * Significantly refactored to be lighter
-  * Only simple REPL and simple StackTrace turned on
+  * Only simple REPL and simple StackTrace plugins for now
   * Added DIE handler to auto-start
 
 Version 0.01 (released 2008.10.14)

@@ -21,6 +21,11 @@ print $out $f;
 # ***************************************
 __DATA__
 Sat May 30 2009  awwaiid@thelackthereof.org
+  * Update POD
+  * Remove dead files (some will be back!)
+  * Update makefiles and such
+  * Add some more ideas
+  * Add TODO file
   tagged 0.2
   * Update CallStack plugin and include it by default
 

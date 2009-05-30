@@ -8,11 +8,8 @@ eg/cgi_hello.pl
 eg/counter.pl
 lib/CGI/Inspect.pm
 lib/CGI/Inspect/Plugin.pm
-lib/CGI/Inspect/Plugin/AdvancedREPL.pm
 lib/CGI/Inspect/Plugin/CallStack.pm
-lib/CGI/Inspect/Plugin/Counter.pm
 lib/CGI/Inspect/Plugin/Exit.pm
-lib/CGI/Inspect/Plugin/FileEdit.pm
 lib/CGI/Inspect/Plugin/REPL.pm
 lib/CGI/Inspect/htdocs/images/black/tv-collapsable-last.gif
 lib/CGI/Inspect/htdocs/images/black/tv-collapsable.gif
@@ -177,5 +174,4 @@ lib/CGI/Inspect/htdocs/js/themes/flora/i/tabs.png
 lib/CGI/Inspect/htdocs/js/version.txt
 lib/CGI/Inspect/htdocs/mon.css
 lib/CGI/Inspect/htdocs/mon.js
-lib/Devel/REPL/Plugin/DebugHelp.pm
 t/CGI-Inspect.t
