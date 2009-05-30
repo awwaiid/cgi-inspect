@@ -74,21 +74,5 @@ sub process {
   return $output;
 }
 
-=head1 SEE ALSO
-
-L<Continuity>, L<Devel::REPL>, L<Coro::Debug>
-
-=head1 AUTHOR
-
-  Brock Wilcox <awwaiid@thelackthereof.org> - http://thelackthereof.org/
-
-=head1 COPYRIGHT
-
-  Copyright (c) 2008 Brock Wilcox <awwaiid@thelackthereof.org>. All rights
-  reserved.  This program is free software; you can redistribute it and/or modify
-  it under the same terms as Perl 5.10 or later.
-
-=cut
-
 1;
 

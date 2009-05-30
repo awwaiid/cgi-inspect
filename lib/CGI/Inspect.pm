@@ -215,5 +215,21 @@ sub main {
   $request->end_request;
 }
 
+=head1 SEE ALSO
+
+L<Carp::REPL>
+
+=head1 AUTHOR
+
+  Brock Wilcox <awwaiid@thelackthereof.org> - http://thelackthereof.org/
+
+=head1 COPYRIGHT
+
+  Copyright (c) 2008-2009 Brock Wilcox <awwaiid@thelackthereof.org>. All rights
+  reserved.  This program is free software; you can redistribute it and/or
+  modify it under the same terms as Perl itself.
+
+=cut
+
 1;
 
