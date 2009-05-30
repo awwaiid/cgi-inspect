@@ -72,7 +72,7 @@ sub new {
   my $self = {
     port => 8080,
     plugins => [qw(
-      Exit REPL
+      BasicLook Exit REPL
     )],
     # REPL CallStack Exit Counter FileEdit
     plugin_objects => [],
@@ -110,7 +110,8 @@ Initialize the Continuity server, and begin the run loop.
 sub start_server {
   my ($self) = @_;
   my $docroot = $INC{'CGI/Inspect.pm'};
-  $docroot =~ s/Inspect.pm/htdocs/;
+  $docroot =~ s/Inspect.pm/Inspect\/htdocs/;
+  #print STDERR "docroot: $docroot\n";
   my $server = Continuity->new(
     port => $self->{port},
     docroot => $docroot,
@@ -131,26 +132,24 @@ sub display {
   my ($self, $content) = @_;
   my $id = $self->request->session_id;
   my $html_headers = join '', @{ $self->{html_headers} };
-  $self->request->print(qq|
-    <html>
-      <head>
-        <title>CGI::Inspect</title>
-        <link rel="stylesheet" type="text/css" href="htdocs/mon.css">
-        <link rel="stylesheet" href="js/themes/flora/flora.dialog.css" type="text/css" media="screen">
-        <link rel="stylesheet" href="js/jquery-treeview/jquery.treeview.css" />
-        <script type="text/javascript" src="js/jquery-1.2.6.js"></script>
-        <script type="text/javascript" src="js/jquery.ui.all.js"></script>
-        <script type="text/javascript" src="js/jquery-treeview/jquery.treeview.js"></script>
-        <script type="text/javascript" src="js/jquery.cookie.js"></script>
-        <script type="text/javascript" src="mon.js"></script>
-        $html_headers
-      </head>
-      <body class=flora>
-        <input type=hidden name=sid value="$id">
-        $content
-      </body>
-    </html>
-  |);
+  if($self->request->param('no_html_wrapper')) {
+    $self->request->print($content);
+  } else {
+    $self->request->print(qq|
+      <html>
+        <head>
+          <title>CGI::Inspect</title>
+          $html_headers
+        </head>
+        <body class=smoothness>
+          <form method=POST action="/">
+            <input type=hidden name=sid value="$id">
+            $content
+          </form>
+        </body>
+      </html>
+    |);
+  }
 }
 
 =head2 $self->request
@@ -178,6 +177,7 @@ sub load_plugins {
     eval "use $plugin_pkg";
     my $plugin_instance = $plugin_pkg->new( manager => $self );
     push @{ $self->{plugin_objects} }, $plugin_instance;
+    $self->{plugins_by_name}->{$plugin_pkg} = $plugin_instance;
   }
 }
 
@@ -193,8 +193,12 @@ sub main {
   $self->{do_exit} = 0;
   do {
     my $content = '';
-    foreach my $plugin (@{$self->{plugin_objects}}) {
-      $content .= $plugin->process();
+    if($request->param('plugin')) {
+      $content .= $self->{plugins_by_name}->{$request->param('plugin')}->process();
+    } else {
+      foreach my $plugin (@{$self->{plugin_objects}}) {
+        $content .= $plugin->process();
+      }
     }
     $self->display($content);
     $request->next->execute_callbacks
