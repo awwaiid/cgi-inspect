@@ -37,7 +37,7 @@ use Continuity::RequestCallbacks;
 use base 'Exporter';
 our @EXPORT = qw( inspect );
 
-our $VERSION = '0.2';
+our $VERSION = '0.3';
 
 =head1 EXPORTED SUBS
 
