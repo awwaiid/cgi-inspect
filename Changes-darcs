@@ -20,7 +20,14 @@ print $out $f;
 # *** This is the actual Changelog :) ***
 # ***************************************
 __DATA__
+Thu Jun  4 2009  awwaiid@thelackthereof.org
+  * Bump version and update manifest
+
+Tue Jun  2 2009  awwaiid@thelackthereof.org
+  * Add missing files
+
 Sat May 30 2009  awwaiid@thelackthereof.org
+  * Update Changelog and manifest some more
   * Update POD
   * Remove dead files (some will be back!)
   * Update makefiles and such
