@@ -29,7 +29,7 @@ sub process {
 
   my $declarations = join "\n",
                      map {"my $_;"}
-                     keys %{ $frame->lexicals };
+                     keys %{ $frame->lexicals || {} };
 
   my $aliases = q|
     while (my ($k, $v) = each %{ $frame->lexicals }) {
