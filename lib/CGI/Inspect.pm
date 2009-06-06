@@ -241,6 +241,7 @@ sub load_plugins {
   foreach my $plugin (@{ $self->{plugins} }) {
     my $plugin_pkg = $base . $plugin;
     eval "use $plugin_pkg";
+    print STDERR "Error loading $plugin_pkg, $@\n" if $@;
     my $plugin_instance = $plugin_pkg->new( manager => $self );
     push @{ $self->{plugin_objects} }, $plugin_instance;
     $self->{plugins_by_name}->{$plugin_pkg} = $plugin_instance;
