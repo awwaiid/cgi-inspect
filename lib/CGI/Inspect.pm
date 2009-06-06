@@ -6,14 +6,18 @@ CGI::Inspect - Inspect and debug CGI apps with an in-browser UI
 
 =head1 SYNOPSIS
 
-  use CGI;
   use CGI::Inspect;
 
   print "Content-type: text/html\n\n";
+
+  my $food = "toast";
+
   for my $i (1..10) {
     print "$i cookies for me to eat...<br>";
-    inspect() if $i == 5;
+    inspect() if $i == 5; # be sure to edit $toast :)
   }
+
+  print "I also like $food!";
 
 =head1 DESCRIPTION
 
@@ -23,11 +27,11 @@ error logs you'll see something like "Please connect to localhost:8080". When
 you do, you'll be greeted with an inspection UI which includes a stack trace,
 REPL, and other goodies.
 
-=head1 REQUIREMENTS
-
-To work it's magic this modules needs Continuity, Padwalker, and Data::Alias.
-Some plugins have additional dependencies which are not pulled in when
-installing from CPAN.
+To work it's magic this modules uses Continuity, Devel::LexAlias,
+Devel::StackTrace::WithLexicals, and their prerequisites (such as PadWalker).
+Remember that you can always install such things locally for debugging -- no
+need to install them systemwide (in case you are afraid of the power that they
+provide).
 
 =cut
 
@@ -44,7 +48,14 @@ our $VERSION = '0.3';
 =head2 inspect()
 
 This starts the Continuity server and inspector on the configured port
-(defaulting to 8080).
+(defaulting to 8080). You can pass it parameters which it will then pass on to
+CGI::Inspect->new. The most useful one is probably port:
+
+  inspect( port => 12345 );
+
+Another useful parameter is plugins. The default is:
+
+    plugins => [qw( BasicLook Exit REPL CallStack )]
 
 =cut
 
@@ -59,7 +70,58 @@ sub inspect {
   print "<script>window.close('cgi-inspect');</script>\n";
 }
 
-$SIG{__DIE__} = \&inspect;
+# This might be cool, but we'll disable it for now.
+#$SIG{__DIE__} = \&inspect;
+
+=head1 PLUGINS
+
+CGI::Inspect comes with a few plugins by default:
+
+=over 4
+
+=item * L<REPL|CGI::Inspect::Plugin::REPL> - A simple Read-Eval-Print prompt
+
+=item * L<StackTrace|CGI::Inspect::Plugin::StackTrace> - A pretty stack trace (with lexical editing!)
+
+=item * L<Exit|CGI::Inspect::Plugin::Exit> - Stop inspecting
+
+=back
+
+=head2 Creating Plugins
+
+Plugins are easy to create! They are really just subroutines that return a
+string for what they want printed. All of the built-in plugins actuall inherti
+from L<CGI::Inspect::Plugin>, which just provides some convenience methods. The
+main CGI::Inspect module will create an instance of your plugin with
+Plugin->new, and then will execute it with $plugin->process.
+
+Plugins can, however, make use of Continuity, including utilizing callbacks.
+Here is the complete source to the 'Exit' plugin, as a fairly simple example.
+
+  package CGI::Inspect::Plugin::Exit;
+
+  use strict;
+  use base 'CGI::Inspect::Plugin';
+
+  sub process {
+    my ($self) = @_;
+    my $exit_link = $self->request->callback_link(
+      Exit => sub {
+        $self->manager->{do_exit} = 1;
+      }
+    );
+    my $output = qq{
+      <div class=dialog title="Exit">
+        $exit_link
+      </div>
+    };
+    return $output;
+  }
+
+  1;
+
+For now, read the source of the default plugins for further ideas. And of
+course email the author if you have any questions or ideas!
 
 =head1 METHODS
 
