@@ -20,6 +20,19 @@ print $out $f;
 # *** This is the actual Changelog :) ***
 # ***************************************
 __DATA__
+Sat Jun  6 2009  awwaiid@thelackthereof.org
+  * add notes.txt file
+  * Add experimental LIQ::Inspect::Here
+  * update cgi_hello.pl a bit
+  * Teach the REPL to deal without lexicals
+  * Update CallStack plugin, including editability
+  * print plugin load errors to STDERR
+  * version bump
+  * Update documentation
+  * Bump Continuity dependency
+  * Add cookie example from pod
+  * Update changelog
+
 Thu Jun  4 2009  awwaiid@thelackthereof.org
   * Bump version and update manifest
 

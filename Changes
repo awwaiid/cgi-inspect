@@ -1,6 +1,13 @@
 Revision history for CGI::Inspect. See Changes-darcs or the main repository for
 a detailed list of internal changes.
 
+Version 0.04 (released 2009.06.06)
+  * Update documentation
+  * Update CallStack plugin, now includes editability
+  * Add experimental LIQ::Inspect::Here
+  * Teach the REPL to deal without lexicals
+  * Print plugin load errors to STDERR
+
 Version 0.03 (released 2009.06.04)
   * Add missing files
 

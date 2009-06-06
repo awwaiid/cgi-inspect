@@ -6,7 +6,9 @@ README
 TODO
 eg/cgi_hello.pl
 eg/counter.pl
+eg/yummy_cookies.pl
 lib/CGI/Inspect.pm
+lib/CGI/Inspect/Here.pm
 lib/CGI/Inspect/Plugin.pm
 lib/CGI/Inspect/Plugin/BasicLook.pm
 lib/CGI/Inspect/Plugin/CallStack.pm
@@ -189,4 +191,5 @@ lib/CGI/Inspect/htdocs/js/themes/smoothness/jquery-ui-1.7.1.custom.css
 lib/CGI/Inspect/htdocs/js/version.txt
 lib/CGI/Inspect/htdocs/mon.css
 lib/CGI/Inspect/htdocs/mon.js
+notes.txt
 t/CGI-Inspect.t
