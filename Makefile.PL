@@ -7,7 +7,7 @@ WriteMakefile(
     AUTHOR            => 'Brock Wilcox <awwaiid@thelackthereof.org>',
     LICENSE           => 'perl',
     PREREQ_PM         => {
-      'Continuity'                                         => '1.0',
+      'Continuity'                                         => '1.01',
       'PadWalker'                                          => 0,
       'Devel::LexAlias'                                    => 0,
       'Devel::StackTrace::WithLexicals'                    => '0.01',
