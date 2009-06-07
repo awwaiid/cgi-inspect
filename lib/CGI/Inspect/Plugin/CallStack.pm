@@ -48,9 +48,14 @@ sub print_lexicals {
   my ($self, $lexicals, $frame_index) = @_;
   my $output = '<ul>';
   local $Data::Dumper::Terse = 1;
-
+    
   foreach my $var (sort keys %$lexicals) {
-    my $val = Dumper(${ $lexicals->{$var} });
+    my $val;
+    if(ref $lexicals->{$var} eq 'REF' || ref $lexicals->{$var} eq 'SCALAR') {
+      $val = Dumper(${ $lexicals->{$var} });
+    } else {
+      $val = Dumper( $lexicals->{$var} );
+    }
     $val = escapeHTML($val);
     my $out;
     my $edit_link = $self->request->callback_link(
@@ -58,7 +63,13 @@ sub print_lexicals {
         my $save_button = $self->request->callback_submit(
           Save => sub {
             my $val = $self->param('blah');
-            ${ $lexicals->{$var} } = eval($val);
+            if(ref $lexicals->{$var} eq 'REF' || ref $lexicals->{$var} eq 'SCALAR') {
+              ${ $lexicals->{$var} } = eval($val);
+            } elsif(ref $lexicals->{$var} eq 'ARRAY') {
+              @{ $lexicals->{$var} } = @{ eval($val) };
+            } elsif(ref $lexicals->{$var} eq 'HASH') {
+              %{ $lexicals->{$var} } = %{ eval($val) };
+            }
           }
         );
         $self->{output} = qq{
