@@ -48,6 +48,7 @@ sub print_lexicals {
   my ($self, $lexicals, $frame_index) = @_;
   my $output = '<ul>';
   local $Data::Dumper::Terse = 1;
+  local $Data::Dumper::Indent = 1;
     
   foreach my $var (sort keys %$lexicals) {
     my $val;
@@ -56,10 +57,10 @@ sub print_lexicals {
     } else {
       $val = Dumper( $lexicals->{$var} );
     }
+    chomp $val;
     $val = escapeHTML($val);
-    my $out;
     my $edit_link = $self->request->callback_link(
-      Edit => sub {
+      "$var" => sub {
         my $save_button = $self->request->callback_submit(
           Save => sub {
             my $val = $self->param('blah');
@@ -76,13 +77,18 @@ sub print_lexicals {
           <div class=dialog id=stacktrace title='Stacktrace'>
             $var = <textarea name=blah style="width: 100%; height: 80%">$val</textarea><br>
             $save_button
+            <input type=submit name=cancel value="Cancel">
           </div>
         };
       }
     );
-    $out ||= "<li><pre>$var = $val</pre>$edit_link</li>";
-    #$out ||= "<li><pre>$var = $val</pre></li>";
-    $output .= "<li>$out</li>";
+    $output .= qq{
+      <li>
+        <table border=0>
+          <tr><td valign=top>$edit_link =</td>
+          <td valign=top><pre>$val</pre></td>
+        </table>
+      </li>};
   }
 
   $output .= "</ul>";
