@@ -4,7 +4,7 @@ use lib '../lib';
 use strict;
 use warnings;
 use URI::Escape;
-use Continuity::Monitor;
+use CGI::Inspect;
 
 =head1 Summary
 
@@ -24,8 +24,7 @@ functionality.
 
 use Continuity;
 use vars qw( $server );
-$server = new Continuity( port => 8080 );
-Continuity::Monitor->new( port => 8081, server => $server );
+$server = new Continuity( port => 8081 );
 
 $server->loop;
 
@@ -74,9 +73,7 @@ sub main {
       $counter++ if $action eq '++';
       $counter-- if $action eq '--';
       if($action eq 'REPL') {
-        my $repl = Continuity::Monitor::REPL
-            ->new( request => $request );
-        $repl->repl->run;
+        inspect();
       }
       if($counter == 42) {
         $request->print(q{
