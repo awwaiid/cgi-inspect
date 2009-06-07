@@ -64,12 +64,15 @@ sub print_lexicals {
         my $save_button = $self->request->callback_submit(
           Save => sub {
             my $val = $self->param('blah');
-            if(ref $lexicals->{$var} eq 'REF' || ref $lexicals->{$var} eq 'SCALAR') {
-              ${ $lexicals->{$var} } = eval($val);
-            } elsif(ref $lexicals->{$var} eq 'ARRAY') {
-              @{ $lexicals->{$var} } = @{ eval($val) };
-            } elsif(ref $lexicals->{$var} eq 'HASH') {
-              %{ $lexicals->{$var} } = %{ eval($val) };
+            $val = eval($val);
+            unless ($@) {
+              if(ref $lexicals->{$var} eq 'REF' || ref $lexicals->{$var} eq 'SCALAR') {
+                ${ $lexicals->{$var} } = $val;
+              } elsif(ref $lexicals->{$var} eq 'ARRAY') {
+                @{ $lexicals->{$var} } = @{ $val };
+              } elsif(ref $lexicals->{$var} eq 'HASH') {
+                %{ $lexicals->{$var} } = %{ $val };
+              }
             }
           }
         );
