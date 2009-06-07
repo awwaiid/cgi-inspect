@@ -67,7 +67,6 @@ sub inspect {
   print "<script>window.open('http://localhost:8080/','cgi-inspect');</script>\n";
   my $self = CGI::Inspect->new(@_);
   $self->start_inspecting;
-  print "<script>window.close('cgi-inspect');</script>\n";
 }
 
 # This might be cool, but we'll disable it for now.
@@ -274,7 +273,6 @@ sub main {
   $request->print("<script>window.close();</script>");
   Coro::Event::unloop();
   $request->print("Exiting...");
-  $request->print("<script>window.close();</script>");
   $request->end_request;
 }
 
