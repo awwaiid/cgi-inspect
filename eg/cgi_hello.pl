@@ -20,6 +20,7 @@ sub print_hello {
     a => 1,
     b => 2,
   };
+  print "x=$x<br>\n";
   print "Hello...\n";
   inspect();
   print " world!";
