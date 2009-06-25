@@ -69,8 +69,14 @@ sub inspect {
   $self->start_inspecting;
 }
 
-# This might be cool, but we'll disable it for now.
-#$SIG{__DIE__} = \&inspect;
+# This might be cool, but we'll disable it for now. I mean... because it doesn't work.
+# sub import {
+  # my $class = shift;
+  # my $nodie = grep { $_ eq 'nodie' } @_;
+  # $SIG{__DIE__} = \&CGI::Inspect::inspect unless $nodie;
+  # $class->SUPER::import(@_);
+# }
+
 
 =head1 PLUGINS
 
