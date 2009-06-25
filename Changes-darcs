@@ -20,7 +20,18 @@ print $out $f;
 # *** This is the actual Changelog :) ***
 # ***************************************
 __DATA__
+Sun Jun  7 2009  awwaiid@thelackthereof.org
+  * Update counter.pl to use CGI::Inspect... but it is broken
+
 Sat Jun  6 2009  awwaiid@thelackthereof.org
+  * Turn on persistent tree state for the callstack
+  * Print the before value in our hello demo
+  * Check the errors from evaling a new value
+  * Clean up some of the value-edit related code
+  * Remove some of the window.close things that were't actually being used
+  * Make lexical editing work for regular hashes and arrays
+  tagged 0.4
+  * Update changelogs
   * add notes.txt file
   * Add experimental LIQ::Inspect::Here
   * update cgi_hello.pl a bit

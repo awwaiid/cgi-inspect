@@ -4,7 +4,7 @@ a detailed list of internal changes.
 Version 0.04 (released 2009.06.06)
   * Update documentation
   * Update CallStack plugin, now includes editability
-  * Add experimental LIQ::Inspect::Here
+  * Add experimental CGI::Inspect::Here
   * Teach the REPL to deal without lexicals
   * Print plugin load errors to STDERR
 

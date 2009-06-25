@@ -6,7 +6,7 @@ CGI::Inspect - Inspect and debug CGI apps with an in-browser UI
 
 =head1 SYNOPSIS
 
-  use CGI::Inspect;
+  use CGI::Inspect; # This exports inspect()
 
   print "Content-type: text/html\n\n";
 
